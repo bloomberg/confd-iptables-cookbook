@@ -1,0 +1,6 @@
+{{range gets "/host/<%= node.ipaddress %>/*"}}
+{{$data := json .Value}}
+-A INPUT -p {{$data.protocol}} -m {{$data.protocol}} --dport {{$data.port}} -j {{$data.service_name}}  ## Chain For {{$data.service_name}}
+-A {{$data.service_name}} -s {{$data.host_list}} -j ACCEPT
+
+
