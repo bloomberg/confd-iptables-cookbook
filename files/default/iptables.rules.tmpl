@@ -1,4 +1,6 @@
--A INPUT -p {{ getv "/host/node['ipaddress']/protocol" }} -m {{ getv "/host/node['ipaddress']/protocol" }} --dport {{ getv "/host/node['ipaddress']/port" }} -j {{ getv "/host/node['ipaddress']/service_name" }}  ## Chain For {{ getv "/host/node['ipaddress']/service_name" }}
--A {{ getv "/host/node['ipaddress']/service_name" }} -s {{ getv "/host/node['ipaddress']/hosts" }} -j ACCEPT
+{{range gets "/host/node['ipaddress']/*"}}
+{{$data := json .Value}}
+-A INPUT -p {{$data.protocol}} -m {{$data.protocol}} --dport {{$data.port}} -j {{$data.service_name}}  ## Chain For {{$data.service_name}}
+-A {{$data.service_name}} -s {{$data.host_list}} -j ACCEPT
 
 
