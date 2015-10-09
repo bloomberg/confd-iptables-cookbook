@@ -1,0 +1,4 @@
+-A INPUT -p {{ getv "/host/node['ipaddress']/protocol" }} -m {{ getv "/host/node['ipaddress']/protocol" }} --dport {{ getv "/host/node['ipaddress']/port" }} -j {{ getv "/host/node['ipaddress']/service_name" }}  ## Chain For {{ getv "/host/node['ipaddress']/service_name" }}
+-A {{ getv "/host/node['ipaddress']/service_name" }} -s {{ getv "/host/node['ipaddress']/hosts" }} -j ACCEPT
+
+
