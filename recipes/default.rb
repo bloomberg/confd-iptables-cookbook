@@ -7,7 +7,7 @@
 include_recipe 'iptables::default'
 
 confd_template '/etc/confd/iptables.rules' do
-  source 'iptables.rules.tmpl'
+  template_source node['confd-iptables']['template_source']
   prefix node['confd-iptables']['prefix']
   keys node.tags.map { |t| "/groups/#{t}" }
 
