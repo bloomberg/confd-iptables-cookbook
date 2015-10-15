@@ -8,7 +8,8 @@ include_recipe 'iptables::default'
 
 confd_template '/etc/confd/iptables.rules' do
   source 'iptables.rules.tmpl'
-  keys "/hosts/#{node['ipaddress']}"
+  prefix node['confd-iptables']['prefix']
+  keys node.tags.map { |t| "/groups/#{t}" }
 
   check_command "/usr/sbin/iptables-restore -T confd -t #{path}"
   reload_command "/usr/sbin/iptables-restore -T confd #{path}"

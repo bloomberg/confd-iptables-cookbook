@@ -4,6 +4,6 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-
+default['confd-iptables']['prefix'] = '/'
 default['confd-iptables']['enable_iptables'] = true
 default['confd-iptables']['enable_ip6tables'] = false
