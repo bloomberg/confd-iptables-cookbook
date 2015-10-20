@@ -11,4 +11,3 @@ supports 'redhat', '>= 5.8'
 supports 'centos', '>= 5.8'
 
 depends 'confd', '~> 1.0'
-depends 'iptables'

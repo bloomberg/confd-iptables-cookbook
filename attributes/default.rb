@@ -6,4 +6,4 @@
 #
 default['confd-iptables']['template_source'] = 'iptables.tmpl.erb'
 default['confd-iptables']['prefix'] = '/'
-default['confd-iptables']['enable_iptables'] = true
+default['confd-iptables']['target_directory'] = '/etc/iptables'

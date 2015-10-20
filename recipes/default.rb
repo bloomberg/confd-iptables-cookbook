@@ -4,11 +4,19 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-node.default['confd']['config']['interval'] = 60
 include_recipe 'confd::default'
-include_recipe 'iptables::default'
 
-confd_template '/etc/iptables.d/confd' do
+if platform_family?('rhel') && node['platform_version'].to_i == 7
+  package 'iptables-services'
+else
+  package 'iptables'
+end
+
+directory node['confd-iptables']['target_directory'] do
+  recursive true
+end
+
+confd_template File.join(node['confd-iptables']['target_directory'], 'confd') do
   template_source node['confd-iptables']['template_source']
   prefix node['confd-iptables']['prefix']
   keys node.tags.map { |t| "/groups/#{t}" }
