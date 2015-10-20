@@ -1,4 +1,6 @@
 name 'test-confd-iptables'
 version '0.0.1'
+depends 'build-essential'
 depends 'confd-iptables'
 depends 'zookeeper-cluster'
+depends 'chef-sugar'

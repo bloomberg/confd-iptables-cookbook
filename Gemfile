@@ -6,8 +6,6 @@ gem 'toml'
 
 group :test, :development do
   gem 'chef-dk'
-  gem 'chef-provisioning-vagrant'
-  gem 'zk'
 end
 
 group :lint do
