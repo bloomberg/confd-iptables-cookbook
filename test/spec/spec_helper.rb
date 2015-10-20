@@ -1,5 +1,5 @@
 require 'chefspec'
-require 'chefspec/policyfile'
+require 'chefspec/berkshelf'
 require 'chefspec/cacher'
 
 RSpec.configure do |c|
