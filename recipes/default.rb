@@ -11,8 +11,8 @@ confd_template '/etc/iptables.d/confd' do
   prefix node['confd-iptables']['prefix']
   keys node.tags.map { |t| "/groups/#{t}" }
 
-  check_command "/sbin/iptables-restore -t #{path}"
-  reload_command "/sbin/iptables-restore #{path}"
+  check_command "/sbin/iptables-restore -n -t < #{path}"
+  reload_command "/sbin/iptables-restore -n < #{path}"
 
   notifies :restart, 'confd_service[confd]', :delayed
 end
