@@ -4,7 +4,9 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-include_recipe 'iptables::default', 'confd::default'
+node.default['confd']['config']['interval'] = 60
+include_recipe 'confd::default'
+include_recipe 'iptables::default'
 
 confd_template '/etc/iptables.d/confd' do
   template_source node['confd-iptables']['template_source']
