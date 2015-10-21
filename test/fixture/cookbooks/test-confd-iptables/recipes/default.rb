@@ -17,6 +17,7 @@ ruby_block 'write to zk' do
     rules = node['test-confd-iptables']['rules']
     zk = ZK.new
     zk.mkdir_p('/groups')
+    zk.create('/groups/testing', nil, mode: :persistent, ignore: :node_exists, or: :set)
     zk.create('/groups/default', rules.to_json, mode: :persistent, ignore: :node_exists, or: :set)
   end
 end
