@@ -3,12 +3,14 @@
 :INPUT DROP
 :FORWARD ACCEPT
 :OUTPUT ACCEPT
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
--A INPUT -p icmp -m icmp -j ACCEPT --icmp-type 8
+-A INPUT -m state --state ESTABLISHED -j ACCEPT
+-A INPUT -m state --state RELATED -j ACCEPT
 -A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp -m icmp -j ACCEPT --icmp-type 8
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 <% @new_resource.keys.each do |key| -%>
 {{with getv "<%= key %>"}}{{range jsonArray (getv "<%= key %>")}}-A INPUT -p {{.protocol}} -m {{.protocol}} -s {{.host}} --dport {{.port}} -j ACCEPT
 {{end}}{{end}}
 <% end -%>
+-A INPUT -j DROP
 COMMIT
