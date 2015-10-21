@@ -24,4 +24,5 @@ end
 
 node.default['confd']['config']['backend'] = 'zookeeper'
 node.default['confd']['config']['nodes'] = %w{localhost}
+node.default['confd']['config']['interval'] = 60
 include_recipe 'confd-iptables::default'

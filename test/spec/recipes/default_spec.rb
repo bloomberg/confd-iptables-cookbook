@@ -10,14 +10,14 @@ describe 'confd-iptables::default' do
     end
 
     it { expect(chef_run).to include_recipe('confd::default') }
-    it { expect(chef_run).to create_directory('/etc/iptables') }
+    it { expect(chef_run).to create_directory('/etc/default') }
     it do
-      expect(chef_run).to create_confd_template('/etc/iptables/confd')
+      expect(chef_run).to create_confd_template('/etc/default/iptables')
         .with(template_source: 'iptables.tmpl.erb')
         .with(prefix: '/')
         .with(keys: %w{/groups/default /groups/testing})
-        .with(check_command: '/sbin/iptables-restore -n -t < /etc/iptables/confd')
-        .with(reload_command: '/sbin/iptables-restore -n < /etc/iptables/confd')
+        .with(check_command: '/sbin/iptables-restore -t < /etc/default/iptables')
+        .with(reload_command: '/sbin/iptables-restore < /etc/default/iptables')
     end
   end
 end

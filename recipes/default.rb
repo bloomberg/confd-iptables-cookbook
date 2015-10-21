@@ -12,17 +12,17 @@ else
   package 'iptables'
 end
 
-directory node['confd-iptables']['target_directory'] do
+directory '/etc/default' do
   recursive true
 end
 
-confd_template File.join(node['confd-iptables']['target_directory'], 'confd') do
+confd_template '/etc/default/iptables' do
   template_source node['confd-iptables']['template_source']
   prefix node['confd-iptables']['prefix']
   keys node.tags.map { |t| "/groups/#{t}" }
 
-  check_command "/sbin/iptables-restore -n -t < #{path}"
-  reload_command "/sbin/iptables-restore -n < #{path}"
+  check_command "/sbin/iptables-restore -t < #{path}"
+  reload_command "/sbin/iptables-restore < #{path}"
 
   notifies :restart, 'confd_service[confd]', :delayed
 end
