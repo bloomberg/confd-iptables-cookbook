@@ -19,7 +19,7 @@ end
 confd_template '/etc/default/iptables' do
   template_source node['confd-iptables']['template_source']
   prefix node['confd-iptables']['prefix']
-  keys node.tags.map { |t| "/groups/#{t}" }
+  keys node['confd-iptables']['keys']
 
   check_command "/sbin/iptables-restore -t < #{path}"
   reload_command "/sbin/iptables-restore < #{path}"

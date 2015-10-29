@@ -15,7 +15,7 @@ describe 'confd-iptables::default' do
       expect(chef_run).to create_confd_template('/etc/default/iptables')
         .with(template_source: 'iptables.tmpl.erb')
         .with(prefix: '/')
-        .with(keys: %w{/groups/default /groups/testing})
+        .with(keys: %w{default testing})
         .with(check_command: '/sbin/iptables-restore -t < /etc/default/iptables')
         .with(reload_command: '/sbin/iptables-restore < /etc/default/iptables')
     end
