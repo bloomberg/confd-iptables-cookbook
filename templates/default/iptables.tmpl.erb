@@ -15,4 +15,5 @@
 {{if exists "<%= k %>"}}{{range jsonArray (getv "<%= k %>")}}{{if eq .direction "in"}}{{template "in" .}}{{else}}{{template "out" .}}{{end}} -j <%= k.split('/').last.upcase %>
 {{end}}{{end}}
 <% end -%>
+-A INPUT -j DROP
 COMMIT
