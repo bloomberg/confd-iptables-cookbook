@@ -1,18 +1,16 @@
-{{define "in"}}-A INPUT -p {{.protocol}} -m {{.protocol}} -s {{.address}} --dport {{.port}}{{end}}
-{{define "out"}}-A OUTPUT -p {{.protocol}} -m {{.protocol}} -d {{.address}} --dport {{.port}}{{end}}
 *filter
 :INPUT ACCEPT
 :FORWARD ACCEPT
 :OUTPUT ACCEPT
-<%= @new_resource.keys.map { |k| ":#{k.split('/').last.upcase} -" }.join("\n") %>
+<%= @new_resource.keys.uniq.map { |k| ":#{k.split('/').last.upcase} -" }.join("\n") %>
 -A INPUT -m state --state ESTABLISHED -j ACCEPT
 -A INPUT -m state --state RELATED -j ACCEPT
 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
-<% @new_resource.keys.each do |k| -%>
-{{if exists "<%= k %>"}}{{range jsonArray (getv "<%= k %>")}}{{if eq .direction "in"}}{{template "in" .}}{{else}}{{template "out" .}}{{end}} -j <%= k.split('/').last.upcase %>
+<% @new_resource.keys.uniq.each do |k| -%>
+{{if exists "<%= k %>"}}{{range jsonArray (getv "<%= k %>")}}-A <%= k.split('/').last.upcase %> -p {{.protocol}} -m {{.protocol}} --dport {{.port}} {{if eq .direction "in"}}-s{{else}}-d{{end}} {{.address}} -j ACCEPT
 {{end}}{{end}}
 <% end -%>
 -A INPUT -j DROP
