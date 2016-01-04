@@ -4,7 +4,7 @@ include_recipe 'build-essential::default'
 include_recipe 'chef-sugar::default'
 
 node.tag('default')
-node.tag('testing')
+node.untag('testing')
 
 node.default['zookeeper-cluster']['config']['instance_name'] = 'localhost'
 node.default['zookeeper-cluster']['config']['ensemble'] = %w{localhost}
@@ -14,10 +14,9 @@ chef_gem 'zk'
 require_chef_gem 'zk'
 ruby_block 'write to zk' do
   block do
-    rules = node['test-confd-iptables']['rules']
     zk = ZK.new
-    zk.create('/testing', nil, mode: :persistent, ignore: :node_exists, or: :set)
-    zk.create('/default', rules.to_json, mode: :persistent, ignore: :node_exists, or: :set)
+    zk.create('/testing', node['test-confd-iptables']['rules']['testing'].to_json, mode: :persistent, ignore: :node_exists, or: :set)
+    zk.create('/default', node['test-confd-iptables']['rules']['default'].to_json, mode: :persistent, ignore: :node_exists, or: :set)
   end
 end
 

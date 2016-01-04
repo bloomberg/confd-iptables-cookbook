@@ -1,7 +1,5 @@
-{{define "input-chain"}}-A INPUT -p {{.protocol}} -m {{.protocol}} -s {{.address}} --dport {{.port}} -j ACCEPT{{end}}
-{{define "output-chain"}}-A OUTPUT -p {{.protocol}} -m {{.protocol}} -d {{.address}} --dport {{.port}} -j ACCEPT{{end}}
 *filter
-:INPUT ACCEPT
+:INPUT DROP
 :FORWARD ACCEPT
 :OUTPUT ACCEPT
 -A INPUT -m state --state ESTABLISHED -j ACCEPT
@@ -10,9 +8,10 @@
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
-<% @new_resource.keys.each do |key| -%>
--A INPUT -j <%= key %>
-{{with getv "<%= key %>"}}{{range jsonArray (getv "<%= key %>")}}{{if .direction == "in"}}{{template "input-chain" .}}{{else}}{{template "output-chain" .}}{{end}}{{end}}{{end}}
+<% @new_resource.keys.uniq.each do |k| -%>
+-N <%= k.split('/').last.upcase %>
+-A INPUT -j <%= k.split('/').last.upcase %>
+{{if exists "<%= k %>"}}{{range jsonArray (getv "<%= k %>")}}-A <%= k.split('/').last.upcase %> -p {{.protocol}} -m {{.protocol}} --dport {{.port}} {{if eq .direction "in"}}-s{{else}}-d{{end}} {{.address}} -j ACCEPT
+{{end}}{{end}}
 <% end -%>
--A INPUT -j DROP
 COMMIT
