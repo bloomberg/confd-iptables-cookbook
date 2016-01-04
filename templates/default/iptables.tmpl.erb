@@ -11,6 +11,7 @@
 -A INPUT -i lo -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
 <% @new_resource.keys.each do |key| -%>
+-A INPUT -j <%= key %>
 {{with getv "<%= key %>"}}{{range jsonArray (getv "<%= key %>")}}{{if .direction == "in"}}{{template "input-chain" .}}{{else}}{{template "output-chain" .}}{{end}}{{end}}{{end}}
 <% end -%>
 -A INPUT -j DROP
