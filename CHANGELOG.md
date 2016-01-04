@@ -5,7 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ## 1.2.2
-- Fixes bug in jump from input to custom chain.
+- Fixes bug where jump wasn't happening from input to custom chain.
+
+## 1.2.1
+- Fixes issue with iptables template.
+
+## 1.2.0
+- Adds support for writing out to custom chains.
 
 ## 1.0.1
 - Fixes integration test harness using Test Kitchen.
