@@ -1,4 +1,9 @@
 # confd-iptables-cookbook
+[![Build Status](https://img.shields.io/travis/bloomberg/confd-iptables-cookbook.svg)](https://travis-ci.org/bloomberg/confd-iptables-cookbook)
+[![Code Quality](https://img.shields.io/codeclimate/github/bloomberg/confd-iptables-cookbook.svg)](https://codeclimate.com/github/bloomberg/confd-iptables-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/confd-iptables.svg)](https://supermarket.chef.io/cookbooks/confd-iptables)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 Application cookbook which manages [iptables][1] rules using [confd][0].
 
 ## Basic Usage

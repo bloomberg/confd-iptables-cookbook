@@ -12,5 +12,5 @@ supports 'centos', '>= 5.8'
 
 depends 'confd', '~> 1.0'
 
-issues_url 'https://github.com/johnbellone/confd-iptables-cookbook/issues' if defined?(issues_url)
-source_url 'https://github.com/johnbellone/confd-iptables-cookbook' if defined?(source_url)
+issues_url 'https://github.com/bloomberg/confd-iptables-cookbook/issues' if defined?(issues_url)
+source_url 'https://github.com/bloomberg/confd-iptables-cookbook' if defined?(source_url)
